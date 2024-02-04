@@ -10,6 +10,6 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class AuthService implements IAuthService {
 
-    private final LoadAuthPort loadAuthPort;
-    private final UpdateAuthPort updateAuthPort;
+//    private final LoadAuthPort loadAuthPort;
+//    private final UpdateAuthPort updateAuthPort;
 }

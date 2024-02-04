@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.bind.support.WebExchangeBindException;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
 import java.util.Objects;
 
 @RestControllerAdvice
@@ -25,20 +26,38 @@ public class GlobalExceptionHandler {
     private final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     @ExceptionHandler(RuntimeException.class)
-    public Mono<ResponseEntity<RuntimeException>> handleRuntimeException(RuntimeException runtimeException){
+    public Mono<ResponseEntity<CustomError>> handleRuntimeException(RuntimeException runtimeException){
         logger.error(runtimeException.getMessage());
+        CustomDetail customDetail = CustomDetail.builder()
+                .errorCode(EErrorCode.INTERNAL_SERVER_ERROR.getStatus().value())
+                .errorMessage(runtimeException.getMessage())
+                .build();
+
         return Mono.just(
                 ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                        .body(runtimeException)
+                        .body(CustomError.builder()
+                                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                                .details(List.of(customDetail))
+                                .build()
+                        )
         );
     }
 
     @ExceptionHandler(NestedRuntimeException.class)
-    public Mono<ResponseEntity<String>> handleCodecException(NestedRuntimeException codecException){
+    public Mono<ResponseEntity<CustomError>> handleCodecException(NestedRuntimeException codecException){
         logger.error(codecException.getMessage());
+        CustomDetail customDetail = CustomDetail.builder()
+                .errorCode(EErrorCode.INTERNAL_SERVER_ERROR.getStatus().value())
+                .errorMessage(codecException.getCause().getMessage())
+                .build();
+
         return Mono.just(
                 ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                        .body(codecException.getCause().getMessage())
+                        .body(CustomError.builder()
+                                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                                .details(List.of(customDetail))
+                                .build()
+                        )
         );
     }
 

@@ -8,3 +8,10 @@ spring:
     locations: classpath:db/migration
     user: root
     password: root
+springdoc:
+  api-docs:
+    path: "/swagger-doc/v3/api-docs"
+    enabled: true
+  swagger-ui:
+    path: /swagger-doc/v3/swagger-ui.html
+    enabled: true
