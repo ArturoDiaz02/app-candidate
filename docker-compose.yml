@@ -1,0 +1,36 @@
+version: "3.1"
+
+services:
+
+  db:
+    image: mysql:latest
+    container_name: mysql
+    restart: always
+    environment:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: app-db
+    ports:
+      - "3306:3306"
+    networks:
+      - app-network
+
+  app-candidate:
+    build:
+      context: ./app-candidate
+      dockerfile: Dockerfile
+    container_name: app-candidate
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+        SPRING_PROFILES_ACTIVE: prod
+        SPRING_R2DBC_URL: r2dbc:mysql://db:3306/app-db
+        SPRING_FLYWAY_URL: jdbc:mysql://db:3306/app-db
+    networks:
+      - app-network
+    depends_on:
+        - db
+
+networks:
+    app-network:
+        driver: bridge
