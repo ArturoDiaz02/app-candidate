@@ -6,7 +6,7 @@ import reactor.core.publisher.Mono;
 
 public interface LoadCandidatePort {
 
-    Flux<Candidate> getAllCandidates(String gender, Double minSalary, Double maxSalary, Double experience);
+    Flux<Candidate> getAllCandidates(Double minSalary, Double maxSalary, Integer minExperience, Integer maxExperience);
 
     Mono<Boolean> existsByEmailOrPhone(String email, String phone);
     Mono<Candidate> getCandidateById(Integer id);

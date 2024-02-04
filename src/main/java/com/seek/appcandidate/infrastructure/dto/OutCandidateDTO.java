@@ -19,6 +19,4 @@ public class OutCandidateDTO {
     private String date_of_birth;
     private Integer experience_years;
     private String education;
-    private String created_at;
-    private String updated_at;
 }

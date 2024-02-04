@@ -20,13 +20,13 @@ public class CandidatePersistenceAdapter implements LoadCandidatePort, UpdateCan
     private final Logger logger = LoggerFactory.getLogger(CandidatePersistenceAdapter.class);
 
     @Override
-    public Flux<Candidate> getAllCandidates(String gender, Double minSalary, Double maxSalary, Double experience) {
+    public Flux<Candidate> getAllCandidates(Double minSalary, Double maxSalary, Integer minExperience, Integer maxExperience) {
         logger.info("Getting all candidates");
         return candidateRepository.findByGenderAndSalaryExpectedBetweenAndExperience(
-                gender,
                 minSalary,
                 maxSalary,
-                experience
+                minExperience,
+                maxExperience
         );
     }
 
@@ -50,14 +50,8 @@ public class CandidatePersistenceAdapter implements LoadCandidatePort, UpdateCan
     }
 
     @Override
-    public Mono<Candidate> createCandidate(Candidate candidate) {
+    public Mono<Candidate> updateOrCreateCandidate(Candidate candidate) {
         logger.info("Saving candidate: " + candidate.toString());
-        return candidateRepository.save(candidate);
-    }
-
-    @Override
-    public Mono<Candidate> updateCandidate(Candidate candidate) {
-        logger.info("Updating candidate: " + candidate.toString());
         return candidateRepository.save(candidate);
     }
 

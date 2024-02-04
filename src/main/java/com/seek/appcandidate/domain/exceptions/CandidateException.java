@@ -1,13 +1,11 @@
 package com.seek.appcandidate.domain.exceptions;
 
-import com.seek.appcandidate.domain.enums.EExceptionDetails;
+import com.seek.appcandidate.domain.enums.EErrorCode;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.http.HttpStatus;
 
 import java.io.Serial;
-import java.util.Arrays;
 import java.util.List;
 
 @Getter
@@ -17,22 +15,24 @@ public class CandidateException extends RuntimeException {
 
     @Serial
     private static final long serialVersionUID = 1L;
-    private HttpStatus status;
-    private List<EExceptionDetails> exceptionDetails;
+    private CustomError customError;
 
-    public CandidateException(HttpStatus status, EExceptionDetails exceptionDetails) {
-        super(exceptionDetails.getMessage(), null, false, true);
-        this.status = status;
-        this.exceptionDetails = List.of(exceptionDetails);
+    public CandidateException(CustomError customError) {
+        super("", null, false, true);
+        this.customError = customError;
     }
 
-    public CandidateException(HttpStatus status, List<EExceptionDetails> exceptionDetails) {
+    public CandidateException(EErrorCode error, String... args) {
         super();
-        this.status = status;
-        this.exceptionDetails = exceptionDetails;
-    }
-    public CandidateException(String message) {
-        super(message);
+        List<CustomDetail> details = List.of(CustomDetail.builder()
+                .errorCode(error.getStatus().value())
+                .errorMessage(String.format(error.getDetails(), args))
+                .build()
+        );
+        this.customError = CustomError.builder()
+                .status(error.getStatus())
+                .details(details)
+                .build();
     }
 
 }

@@ -13,11 +13,10 @@ public record CreateCandidateDTO(
         @NotNull
         @NotBlank
         String name,
-        @NotBlank
+        @Email
         String email,
         @NotNull
         EGender gender,
-        @NotBlank
         String phone,
         String address,
         @Min(0)
@@ -25,7 +24,7 @@ public record CreateCandidateDTO(
         Double salary_expected,
         @DateFormat
         String date_of_birth,
-        @Min(0)
+        @Min(1)
         @NotNull
         Integer experience_years,
         String education

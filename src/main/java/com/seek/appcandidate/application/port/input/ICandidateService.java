@@ -11,7 +11,7 @@ public interface ICandidateService {
     Mono<OutCandidateDTO> updateCandidate(Integer id, CreateCandidateDTO candidate);
     Mono<OutCandidateDTO> getCandidateById(Integer id);
     Mono<OutCandidateDTO> getCandidateByEmail(String email);
-    Flux<OutCandidateDTO> getAllCandidates(String gender, Double minSalary, Double maxSalary, Double experience);
+    Flux<OutCandidateDTO> getAllCandidates(Double minSalary, Double maxSalary, Integer minExperience, Integer maxExperience);
     Mono<ResponseEntity<String>> deleteCandidate(Integer id);
     Mono<ResponseEntity<String>> deleteAllCandidates();
 }

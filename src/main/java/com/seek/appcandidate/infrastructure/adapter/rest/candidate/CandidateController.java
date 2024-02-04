@@ -37,9 +37,9 @@ public class CandidateController implements ICandidateAPI {
     }
 
     @Override
-    public Flux<OutCandidateDTO> getAllCandidates(String gender, Double minSalary, Double maxSalary, Double experience) {
+    public Flux<OutCandidateDTO> getAllCandidates(Double minSalary, Double maxSalary, Integer maxExperience, Integer minExperience) {
         logger.info("Init Get All Candidates");
-        return candidateService.getAllCandidates(gender, minSalary, maxSalary, experience);
+        return candidateService.getAllCandidates(minSalary, maxSalary, maxExperience, minExperience);
     }
 
     @Override

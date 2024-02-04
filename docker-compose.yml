@@ -16,7 +16,7 @@ services:
 
   app-candidate:
     build:
-      context: ./app-candidate
+      context: .
       dockerfile: Dockerfile
     container_name: app-candidate
     restart: always

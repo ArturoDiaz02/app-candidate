@@ -28,3 +28,13 @@ VALUES ('John Doe', 'john@example.com', 'MALE', '123-456-7890', '123 Main St, Ci
         '1985-12-03', 10, 'Ph.D. in Physics'),
        ('Alex Rodriguez', 'alex@example.com', 'MALE', '111-222-3333', '654 Birch St, Countryside', 70000.90,
         '1992-07-25', 6, 'Bachelor in Marketing');
+
+CREATE TABLE IF NOT EXISTS `auth_user`
+(
+    `id`         INT AUTO_INCREMENT PRIMARY KEY,
+    `email`      VARCHAR(254) NOT NULL,
+    `password`   VARCHAR(255) NOT NULL,
+    `is_active`  BOOLEAN      NOT NULL,
+    `created_at` TIMESTAMP    DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);

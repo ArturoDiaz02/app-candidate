@@ -1,6 +1,7 @@
 package com.seek.appcandidate.infrastructure.repository;
 
 import com.seek.appcandidate.domain.model.Candidate;
+import io.r2dbc.spi.Parameter;
 import org.springframework.data.r2dbc.repository.Query;
 import org.springframework.data.r2dbc.repository.R2dbcRepository;
 import org.springframework.data.repository.query.Param;
@@ -12,14 +13,15 @@ import reactor.core.publisher.Mono;
 public interface ICandidateRepository extends R2dbcRepository<Candidate, Integer>{
 
     @Query("SELECT * FROM candidates c " +
-            "WHERE (:gender IS NULL OR UPPER(c.gender) = UPPER(:gender) ) " +
-            "AND (:minSalary IS NULL OR c.salary_expected >= :minSalary) " +
-            "AND (:maxSalary IS NULL OR c.salary_expected <= :maxSalary)")
+            "WHERE (:minSalary IS NULL OR c.salary_expected >= :minSalary) " +
+            "AND (:maxSalary IS NULL OR c.salary_expected <= :maxSalary) " +
+            "AND (:minExperience IS NULL OR c.experience_years >= :minExperience) " +
+            "AND (:maxExperience IS NULL OR c.experience_years <= :maxExperience)")
     Flux<Candidate> findByGenderAndSalaryExpectedBetweenAndExperience(
-            @Param("gender") String gender,
             @Param("minSalary") Double minSalary,
             @Param("maxSalary") Double maxSalary,
-            @Param("experience") Double experience
+            @Param("minExperience") Integer experience,
+            @Param("maxExperience") Integer maxExperience
     );
 
     //if exists by email or phone

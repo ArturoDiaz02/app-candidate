@@ -5,8 +5,7 @@ import reactor.core.publisher.Mono;
 
 public interface UpdateCandidatePort {
 
-    Mono<Candidate> createCandidate(Candidate candidate);
-    Mono<Candidate> updateCandidate(Candidate candidate);
+    Mono<Candidate> updateOrCreateCandidate(Candidate candidate);
     Mono<Void> deleteCandidate(Candidate candidate);
     Mono<Void> deleteAllCandidates();
 }

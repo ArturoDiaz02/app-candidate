@@ -1,11 +1,14 @@
 package com.seek.appcandidate.infrastructure.handlers;
 
-import com.seek.appcandidate.domain.enums.EExceptionDetails;
+import com.seek.appcandidate.domain.enums.EErrorCode;
 import com.seek.appcandidate.domain.exceptions.CandidateException;
 
+import com.seek.appcandidate.domain.exceptions.CustomDetail;
+import com.seek.appcandidate.domain.exceptions.CustomError;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.core.NestedRuntimeException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.ObjectError;
@@ -14,7 +17,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.bind.support.WebExchangeBindException;
 import reactor.core.publisher.Mono;
 
-import java.util.List;
 import java.util.Objects;
 
 @RestControllerAdvice
@@ -31,24 +33,42 @@ public class GlobalExceptionHandler {
         );
     }
 
+    @ExceptionHandler(NestedRuntimeException.class)
+    public Mono<ResponseEntity<String>> handleCodecException(NestedRuntimeException codecException){
+        logger.error(codecException.getMessage());
+        return Mono.just(
+                ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body(codecException.getCause().getMessage())
+        );
+    }
+
     @ExceptionHandler(WebExchangeBindException.class)
-    public Mono<ResponseEntity<Throwable>> handleCodecException(WebExchangeBindException ex){
+    public Mono<ResponseEntity<CustomError>> handleWebExchangeBindException(WebExchangeBindException ex){
         logger.error(ex.getMessage() + " " + ex.getBindingResult().getAllErrors());
-        List<EExceptionDetails> details = ex.getBindingResult().getAllErrors().stream().map(this::mapBindingResultToError).toList();
-        var error = CandidateException.builder().status(HttpStatus.BAD_REQUEST).exceptionDetails(details).build();
-        return Mono.just(ResponseEntity.status(error.getStatus()).body(error));
+        var details = ex.getBindingResult().getAllErrors().stream().map(this::mapBindingResultToError).toList();
+        var customError = CustomError.builder().status(HttpStatus.BAD_REQUEST).details(details).build();
+        return Mono.just(ResponseEntity.status(HttpStatus.BAD_REQUEST).body(customError));
     }
 
     @ExceptionHandler(CandidateException.class)
-    public Mono<ResponseEntity<CandidateException>> handleCandidateException(CandidateException candidateException){
+    public Mono<ResponseEntity<CustomError>> handleCandidateException(CandidateException candidateException){
         logger.error(candidateException.getMessage());
-        return Mono.just(ResponseEntity.status(candidateException.getStatus()).body(candidateException));
+        return Mono.just(
+                ResponseEntity.status(
+                        candidateException.getCustomError().getStatus()
+                ).body(
+                        candidateException.getCustomError()
+                )
+        );
     }
 
-    private EExceptionDetails mapBindingResultToError(ObjectError objectError){
+    private CustomDetail mapBindingResultToError(ObjectError objectError){
         var field = ((DefaultMessageSourceResolvable) Objects.requireNonNull(objectError.getArguments())[0]).getDefaultMessage();
-        var message = EExceptionDetails.ARGUMENT_NOT_VALID.getMessage().formatted(field, objectError.getDefaultMessage());
-        return EExceptionDetails.ARGUMENT_NOT_VALID.withMessage(message);
+        var message = EErrorCode.ARGUMENT_NOT_VALID.getDetails().formatted(field, objectError.getDefaultMessage());
+        return CustomDetail.builder()
+                .errorCode(EErrorCode.ARGUMENT_NOT_VALID.getStatus().value())
+                .errorMessage(message)
+                .build();
     }
 
 }

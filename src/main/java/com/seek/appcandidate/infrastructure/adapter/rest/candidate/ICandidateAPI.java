@@ -3,7 +3,6 @@ package com.seek.appcandidate.infrastructure.adapter.rest.candidate;
 import com.seek.appcandidate.infrastructure.dto.CreateCandidateDTO;
 import com.seek.appcandidate.infrastructure.dto.OutCandidateDTO;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Email;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,16 +31,16 @@ public interface ICandidateAPI {
     @GetMapping("/email/{email}")
     @ResponseStatus(HttpStatus.OK)
     Mono<OutCandidateDTO> getCandidateByEmail(
-            @PathVariable("email") @Email String email
+            @PathVariable("email") String email
     );
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     Flux<OutCandidateDTO> getAllCandidates(
-            @RequestParam(name = "gender", required = false) String gender,
             @RequestParam(name = "minSalary", required = false) Double minSalary,
             @RequestParam(name = "maxSalary", required = false) Double maxSalary,
-            @RequestParam(name = "experience", required = false) Double experience
+            @RequestParam(name = "minExperience", required = false) Integer minExperience,
+            @RequestParam(name = "maxExperience", required = false) Integer maxExperience
     );
 
     //Update
