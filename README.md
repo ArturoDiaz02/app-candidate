@@ -64,7 +64,7 @@ ports:
 
 ## Produccion
 
-La aplicacion esta desplegada en Azure, por lo que puedes acceder a la aplicacion mediante las siguientes url:
+La aplicacion esta desplegada en Azure, por lo que puedes acceder a la aplicacion mediante las siguientes comando en tu terminal:
 
 ```bash
 ssh seek@52.186.181.94
