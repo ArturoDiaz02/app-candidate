@@ -17,9 +17,9 @@ public enum EErrorCode {
     DELETE_CANDIDATE_ERROR(HttpStatus.NOT_FOUND, "Error deleting candidate: %s"),
     DELETE_ALL_CANDIDATES_ERROR(HttpStatus.NOT_FOUND, "Error deleting all candidates: %s"),
     TOKEN_IS_NOT_VALID(HttpStatus.UNAUTHORIZED, "Token is not valid"),
-    TOKEN_EXPIRED(HttpStatus.UNAUTHORIZED, "Token expired"),
-    TOKEN_UNSUPPORTED(HttpStatus.UNAUTHORIZED, "Token unsupported"),
-    TOKEN_NOT_FOUND(HttpStatus.UNAUTHORIZED, "Token not found"),
+    TOKEN_EXPIRED(HttpStatus.UNAUTHORIZED, "Token expired: %s"),
+    TOKEN_UNSUPPORTED(HttpStatus.UNAUTHORIZED, "Token unsupported: %s"),
+    TOKEN_NOT_FOUND(HttpStatus.UNAUTHORIZED, "Token not found: %s"),
     AUTH_METHOD_NOT_SUPPORTED(HttpStatus.METHOD_NOT_ALLOWED, " Auth method not supported"),;
 
     private final HttpStatus status;

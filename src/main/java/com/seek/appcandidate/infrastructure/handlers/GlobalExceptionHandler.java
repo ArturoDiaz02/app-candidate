@@ -5,6 +5,8 @@ import com.seek.appcandidate.domain.exceptions.CandidateException;
 
 import com.seek.appcandidate.domain.exceptions.CustomDetail;
 import com.seek.appcandidate.domain.exceptions.CustomError;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.MalformedJwtException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
@@ -71,7 +73,6 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(CandidateException.class)
     public Mono<ResponseEntity<CustomError>> handleCandidateException(CandidateException candidateException){
-        logger.error(candidateException.getMessage());
         return Mono.just(
                 ResponseEntity.status(
                         candidateException.getCustomError().getStatus()

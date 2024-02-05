@@ -92,7 +92,7 @@ public class CandidateService implements ICandidateService {
                 .flatMap(updateCandidatePort::deleteCandidate)
                 .then(Mono.just(ResponseEntity.ok("Candidate deleted successfully.")))
                 .onErrorResume(throwable -> Mono.error(
-                        new CandidateException(EErrorCode.DELETE_ALL_CANDIDATES_ERROR, throwable.getMessage())
+                        new CandidateException(EErrorCode.DELETE_CANDIDATE_ERROR, id.toString())
                 ));
 
 

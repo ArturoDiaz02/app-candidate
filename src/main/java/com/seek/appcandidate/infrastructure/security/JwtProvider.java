@@ -1,5 +1,6 @@
 package com.seek.appcandidate.infrastructure.security;
 
+import com.seek.appcandidate.application.port.output.LoadSecurityPort;
 import com.seek.appcandidate.domain.enums.EErrorCode;
 import com.seek.appcandidate.domain.exceptions.CandidateException;
 import io.jsonwebtoken.*;
@@ -15,7 +16,7 @@ import java.security.Key;
 import java.util.Date;
 
 @Component
-public class JwtProvider {
+public class JwtProvider implements LoadSecurityPort {
 
     @Value("${jwt.secret}")
     private String secret;
@@ -25,6 +26,7 @@ public class JwtProvider {
 
     private final Logger logger = LoggerFactory.getLogger(JwtProvider.class);
 
+    @Override
     public String generateToken(UserDetails userDetails) {
         logger.info("Generating token for user: " + userDetails.getUsername());
         return Jwts.builder()
@@ -36,10 +38,11 @@ public class JwtProvider {
                 .compact();
     }
 
-    public boolean validateToken(String token) {
+    public Claims validateToken(String token) {
         try {
             logger.info("Validating token: " + token);
-            return isTokenExpired(token);
+            if (isTokenExpired(token)) throw new CandidateException(EErrorCode.TOKEN_IS_NOT_VALID);
+            return getClaims(token);
         } catch (ExpiredJwtException e) {
             logger.error("Token expired: " + token);
             throw new CandidateException(EErrorCode.TOKEN_EXPIRED);

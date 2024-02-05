@@ -2,6 +2,8 @@ package com.seek.appcandidate.infrastructure.security;
 
 import com.seek.appcandidate.domain.enums.EErrorCode;
 import com.seek.appcandidate.domain.exceptions.CandidateException;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,9 +31,8 @@ public class JwtAuthenticatorManager implements ReactiveAuthenticationManager {
     public Mono<Authentication> authenticate(Authentication authentication) {
         logger.info("Authenticating token: " + authentication.getCredentials());
         return Mono.just(authentication)
-                .map(authentication1 -> jwtProvider.getClaims(authentication.getCredentials().toString()))
-                .log()
-                .onErrorResume( e -> Mono.error(new CandidateException(EErrorCode.TOKEN_IS_NOT_VALID)))
+                .map(authentication1 -> jwtProvider.validateToken(authentication.getCredentials().toString()))
+                .onErrorResume(CandidateException.class, Mono::error)
                 .map(claims -> new UsernamePasswordAuthenticationToken(
                         claims.getSubject(),
                         null,
