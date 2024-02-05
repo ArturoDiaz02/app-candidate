@@ -3,6 +3,7 @@ package com.seek.appcandidate;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Contact;
 import io.swagger.v3.oas.annotations.info.Info;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.r2dbc.repository.config.EnableR2dbcRepositories;
@@ -20,10 +21,14 @@ import org.springframework.web.reactive.config.EnableWebFlux;
 				email = "diazartiagacarlosarturo@gmail.com"
 		)
 ))
-public class AppCandidateApplication {
+public class AppCandidateApplication implements CommandLineRunner {
 
 	public static void main(String[] args) {
 		SpringApplication.run(AppCandidateApplication.class, args);
 	}
 
+	@Override
+	public void run(String... args) throws Exception {
+
+	}
 }

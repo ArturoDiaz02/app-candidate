@@ -8,6 +8,7 @@ spring:
     locations: classpath:db/migration
     user: root
     password: root
+
 springdoc:
   api-docs:
     path: "/swagger-doc/v3/api-docs"
@@ -15,3 +16,8 @@ springdoc:
   swagger-ui:
     path: /swagger-doc/v3/swagger-ui.html
     enabled: true
+
+jwt:
+  secret: ZQBzAHQAZQB0AHIAYQBiAGEAagBvAHMAZQByAGEAbQBpAG8AeQBtAGUAZwBhAG4AYQByAGUAMQAwAG0A
+  expiration: 14400000
+

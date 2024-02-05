@@ -15,7 +15,12 @@ public enum EErrorCode {
     CANDIDATE_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "Candidate already exists by email or phone"),
     CANDIDATE_NOT_FOUND(HttpStatus.NOT_FOUND, "Candidate not found: %s"),
     DELETE_CANDIDATE_ERROR(HttpStatus.NOT_FOUND, "Error deleting candidate: %s"),
-    DELETE_ALL_CANDIDATES_ERROR(HttpStatus.NOT_FOUND, "Error deleting all candidates: %s");
+    DELETE_ALL_CANDIDATES_ERROR(HttpStatus.NOT_FOUND, "Error deleting all candidates: %s"),
+    TOKEN_IS_NOT_VALID(HttpStatus.UNAUTHORIZED, "Token is not valid"),
+    TOKEN_EXPIRED(HttpStatus.UNAUTHORIZED, "Token expired"),
+    TOKEN_UNSUPPORTED(HttpStatus.UNAUTHORIZED, "Token unsupported"),
+    TOKEN_NOT_FOUND(HttpStatus.UNAUTHORIZED, "Token not found"),
+    AUTH_METHOD_NOT_SUPPORTED(HttpStatus.METHOD_NOT_ALLOWED, " Auth method not supported"),;
 
     private final HttpStatus status;
     private final String details;
