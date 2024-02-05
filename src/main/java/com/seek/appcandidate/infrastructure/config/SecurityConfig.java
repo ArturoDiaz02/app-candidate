@@ -29,7 +29,8 @@ public class SecurityConfig {
                 .securityContextRepository(securityContextRepository)
                 .authorizeExchange(exchange -> {
                     exchange.pathMatchers("/api/v1/auth/**").permitAll()
-                            .anyExchange().authenticated();
+                            .pathMatchers("/api/v1/candidates/**").authenticated()
+                            .anyExchange().permitAll();
                 })
                 .formLogin(ServerHttpSecurity.FormLoginSpec::disable)
                 .logout(ServerHttpSecurity.LogoutSpec::disable)
