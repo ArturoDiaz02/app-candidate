@@ -9,6 +9,7 @@ Asegúrate de tener instalados los siguientes componentes antes de comenzar:
 - [Docker](https://www.docker.com/get-started)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 - [Maven](https://maven.apache.org/download.cgi)
+- [Postman](https://www.postman.com/downloads/)
 - Git (opcional, pero recomendado para clonar el repositorio)
 
 ## Clonar el Repositorio
@@ -19,6 +20,26 @@ Si no has clonado el repositorio de App-Candidates, puedes hacerlo ejecutando el
 git clone https://github.com/ArturoDiaz02/app-candidate.git
 cd app-candidate
 ```
+## Colección de Postman
+
+Para facilitar la interacción con la API de App-Candidates, hemos creado una colección de Postman que incluye diversos escenarios y casos de uso. Puedes importar esta colección en tu cliente de Postman siguiendo estos pasos:
+
+1. Descarga el archivo JSON de la colección de Postman desde el siguiente enlace:
+
+   [Colección de Postman](https://drive.google.com/file/d/1Mv_x8ZRjgtw5DTZt8hRXxqjC2aCPnV4Y/view?usp=sharing)
+2. Abre Postman y haz clic en la pestaña "Import" en la parte superior izquierda.
+
+3. Selecciona "Paste Raw Text" y pega el contenido copiado.
+
+4. Haz clic en "Import" para agregar la colección a tu entorno de Postman.
+
+### Uso de la Colección
+
+Una vez que hayas importado la colección, podrás acceder a diferentes escenarios y casos de uso relacionados con la gestión de candidatos en App-Candidates. Asegúrate de haber ejecutado la aplicación localmente o mediante Docker Compose antes de probar los endpoints.
+
+Recuerda configurar el token de autenticación en la sección de variables para realizar operaciones que requieran autorización; ademas, recuerda configurar la url.
+
+¡Explora y prueba la colección para conocer más sobre la API de App-Candidates!
 
 ## Configuración
 
@@ -30,12 +51,9 @@ Antes de ejecutar la aplicación, verifica la configuración en el archivo `dock
 ...
 
 environment:
-    MYSQL_ROOT_PASSWORD: root
-    MYSQL_DATABASE: app-db
-    SPRING_PROFILES_ACTIVE: prod
-    SPRING_R2DBC_URL: r2dbc:mysql://db:3306/app-db
-    SPRING_FLYWAY_URL: jdbc:mysql://db:3306/app-db
-
+   SPRING_PROFILES_ACTIVE: prod
+   SPRING_R2DBC_URL: r2dbc:mysql://db:3306/app-db
+   SPRING_FLYWAY_URL: jdbc:mysql://db:3306/app-db
 ports:
     - "3306:3306"  # Puerto para la base de datos MySQL
     - "8080:8080"  # Puerto para la aplicación Spring Boot
