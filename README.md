@@ -26,7 +26,8 @@ Para facilitar la interacción con la API de App-Candidates, hemos creado una co
 
 1. Descarga el archivo JSON de la colección de Postman desde el siguiente enlace:
 
-   [Colección de Postman](https://drive.google.com/file/d/1Mv_x8ZRjgtw5DTZt8hRXxqjC2aCPnV4Y/view?usp=sharing)
+   [Colección de Postman JSON](https://drive.google.com/file/d/1Mv_x8ZRjgtw5DTZt8hRXxqjC2aCPnV4Y/view?usp=sharing) --
+   [WorkSpace de Postman](https://www.postman.com/nortquery/workspace/seek/overview)
 2. Abre Postman y haz clic en la pestaña "Import" en la parte superior izquierda.
 
 3. Selecciona "Paste Raw Text" y pega el contenido copiado.
