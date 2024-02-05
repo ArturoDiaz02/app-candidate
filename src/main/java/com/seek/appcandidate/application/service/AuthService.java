@@ -30,9 +30,10 @@ public class AuthService implements IAuthService {
     @Override
     public Mono<TokenDTO> login(LoginDTO loginDTO) {
         return loadAuthPort.findByEmail(loginDTO.email())
+                .switchIfEmpty(Mono.error(new CandidateException(EErrorCode.CANDIDATE_NOT_FOUND, loginDTO.email())))
                 .filter(user -> passwordEncoder.matches(loginDTO.password(), user.getPassword()))
+                .switchIfEmpty(Mono.error(new CandidateException(EErrorCode.INVALID_PASSWORD)))
                 .map(loadSecurityPort::generateToken)
-                .onErrorResume(e -> Mono.error(new CandidateException(EErrorCode.CANDIDATE_NOT_FOUND, loginDTO.email())))
                 .map(TokenDTO::new);
 
     }

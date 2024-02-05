@@ -20,7 +20,8 @@ public enum EErrorCode {
     TOKEN_EXPIRED(HttpStatus.UNAUTHORIZED, "Token expired: %s"),
     TOKEN_UNSUPPORTED(HttpStatus.UNAUTHORIZED, "Token unsupported: %s"),
     TOKEN_NOT_FOUND(HttpStatus.UNAUTHORIZED, "Token not found"),
-    AUTH_METHOD_NOT_SUPPORTED(HttpStatus.METHOD_NOT_ALLOWED, " Auth method not supported: %s"),;
+    AUTH_METHOD_NOT_SUPPORTED(HttpStatus.METHOD_NOT_ALLOWED, " Auth method not supported: %s"),
+    INVALID_PASSWORD(HttpStatus.BAD_REQUEST, "Invalid password"),;
 
     private final HttpStatus status;
     private final String details;
