@@ -125,10 +125,8 @@ http://localhost:8080/swagger-doc/v3/api-docs
 
 O puedes utilizar las url de produccion para ver la documentacion sin necesidad de ejecutar la aplicacion localmente, las url son las siguientes:
 
-```
-http://52.186.181.94:8080/swagger-doc/v3/swagger-ui.html
-http://52.186.181.94:8080/swagger-doc/v3/api-docs
-```
+[Enlace a Swagger UI](http://52.186.181.94:8080/swagger-doc/v3/swagger-ui.html) ---
+[Enlace a la documentación de la API](http://52.186.181.94:8080/swagger-doc/v3/api-docs)
 
 ## Detener la Aplicación
 
