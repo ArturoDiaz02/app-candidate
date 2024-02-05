@@ -62,6 +62,26 @@ ports:
 ...
 ```
 
+## Produccion
+
+La aplicacion esta desplegada en Azure, por lo que puedes acceder a la aplicacion mediante las siguientes url:
+
+```bash
+ssh seek@52.186.181.94
+```
+La contraseña es: `Seek@1234567`
+
+El codido fuente esta en la carpeta `/app/app-candidate/`
+
+### Consumir API de Produccion
+
+Puedes consumir la API de produccion mediante la siguiente url sin necesidad de ejecutar la aplicacion localmente:
+
+```
+http://52.186.181.94:8080/
+```
+
+
 ## Ejecución con Docker Compose
 
 Para ejecutar la aplicación con Docker Compose, utiliza el siguiente comando en el directorio principal del proyecto:
@@ -101,6 +121,13 @@ Además, la documentación de la API está disponible en formato JSON mediante e
 
 ```
 http://localhost:8080/swagger-doc/v3/api-docs
+```
+
+O puedes utilizar las url de produccion para ver la documentacion sin necesidad de ejecutar la aplicacion localmente, las url son las siguientes:
+
+```
+http://52.186.181.94:8080/swagger-doc/v3/swagger-ui.html
+http://52.186.181.94:8080/swagger-doc/v3/api-docs
 ```
 
 ## Detener la Aplicación
